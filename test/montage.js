@@ -6,7 +6,7 @@
 	var startbutton = document.getElementById('startbutton');
 
 
-	navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia);
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 	startbutton.onclick = function() {
 		if (!navigator.getUserMedia) {
 			alert('Sorry, this isn\'t happening for your browser.');
