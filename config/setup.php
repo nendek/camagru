@@ -22,6 +22,7 @@ try {
 		email VARCHAR(255),
 		login VARCHAR(50),
 		passwd TEXT,
+		token VARCHAR(32),
 		verified TINYINT
 		);";
 	$dbh->prepare($req)->execute();
