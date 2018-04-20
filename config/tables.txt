@@ -1,0 +1,27 @@
+tables:
+	-users:
+		-id;
+		-fisrtname;
+		-lastname;
+		-email;
+		-login;
+		-password;
+		-token;
+		-verified;
+	
+	-galery:
+		-id;
+		-userid;
+		-img;
+	
+	-comment:
+		-id;
+		-userid;
+		-galeryid;
+		-comment;
+	
+	-like:
+		-id;
+		-userid;
+		-galeryid;
+		-yes;
