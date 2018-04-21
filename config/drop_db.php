@@ -4,6 +4,7 @@ require_once 'database.php';
 
 try {
 	$dbh = new PDO($DB_DNS, $DB_USER, $DB_PASSWD);
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	echo "Connect server OK\nDrop DB...\n";
 	$req = "DROP DATABASE ".$DB_NAME;
 	$dbh->prepare($req)->execute();

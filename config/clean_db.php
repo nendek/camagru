@@ -4,14 +4,15 @@ require_once 'database.php';
 
 try {
 	$dbh = new PDO($DB_DNS, $DB_USER, $DB_PASSWD);
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	echo "Connect DB camagru Ok\nClean TABLES...\n";
-	$req = "DELETE FROM galery";
+	$req = "DELETE FROM `galery`";
 	$dbh->prepare($req)->execute();
 	echo "Table galery clean\n";
-	$req = "DELETE FROM comment";
+	$req = "DELETE FROM `comment`";
 	$dbh->prepare($req)->execute();
 	echo "Table galery comment\n";
-	$req = "DELETE FROM like";
+	$req = "DELETE FROM `like`";
 	$dbh->prepare($req)->execute();
 	echo "Table like clean\n";
 } catch (PDOException $e) {
