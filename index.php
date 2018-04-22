@@ -5,7 +5,6 @@
 	<title>Camagru</title>
 </head>
 <body>
-
-	
+<a href="./views/view_signup.php">signup !</a>
 </body>
 </html>
