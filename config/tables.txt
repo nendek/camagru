@@ -25,3 +25,5 @@ tables:
 		-userid;
 		-galeryid;
 		-yes;
+sendmail_path =/usr/sbin/sendmail -t -i -f votreemail@votredomaine.com
+

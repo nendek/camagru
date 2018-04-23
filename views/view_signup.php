@@ -1,14 +1,8 @@
 <?php
 session_start();
+$title = 'Camagru-signup';
+ob_start();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Camagru-signup</title>
-</head>
-<body>
 	<div class="title">SIGNUP</div>
 	<form method="post" action="../controller/signup.php">
 		<label for="form-lastname">Lastname:</label>
@@ -31,5 +25,5 @@ if (isset($_SESSION['error'])) {
 	$_SESSION['error'] = null;
 }
 ?>
-</body>
-</html>
+<?php $contents = ob_get_clean(); ?>
+<?php require 'template.php'; ?>
