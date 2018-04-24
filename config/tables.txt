@@ -27,3 +27,6 @@ tables:
 		-yes;
 sendmail_path =/usr/sbin/sendmail -t -i -f votreemail@votredomaine.com
 
+
+PDOStatement::bindValue() va remplacer telle étiquette par telle valeur.
+PDOStatement::bindParam() va remplacer telle étiquette par telle variable, dont la valeur pourra être modifiée avec le temps par PHP pour exécuter plusieurs fois une même requête préparée et avoir des résultats différents à chaque fois.

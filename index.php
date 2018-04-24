@@ -6,5 +6,6 @@
 </head>
 <body>
 <a href="./views/view_signup.php">signup !</a>
+<a href="./views/view_login.php">login !</a>
 </body>
 </html>

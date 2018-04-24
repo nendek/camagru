@@ -40,6 +40,11 @@ try {
 		header("Location: ../views/view_signup.php");
 		return;
 	}
+	if (strlen($passwd) > 50 || strlen($passwd) < 2) {
+		$_SESSION['error'] = "The password must be between 2 and 50 characters";
+		header("Location: ../views/view_signup.php");
+		return;
+	}
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		$_SESSION['error'] = "You need to enter a valid email";
 		header("Location: ../views/view_signup.php");
