@@ -17,7 +17,7 @@ ob_start();
 		<input id="form-passwd" name="passwd" placeholder="your password" maxlength="50" minlength="6" type="password">
 		<label for="form-passwd-conf">Password:</label>
 		<input id="form-passwd-conf" name="passwd_conf" placeholder="confirm your password" maxlength="50" minlength="6" type="password">
-		<input name"submit" id="form-submit" type="submit" value="OK">
+		<input name="submit" id="form-submit" type="submit" value="OK">
 	</form>
 <?php
 if (isset($_SESSION['error'])) {

@@ -3,6 +3,16 @@ session_start();
 require_once('../models/model_login.php');
 
 try {
+	if (isset($_SESSION['id'])) {
+		//logout
+		logout();
+		header("Location: ../index.php");
+		return;
+	}
+	if (!(isset($_POST['submit']) && $_POST['submit'] === "OK")) {
+		header("Location: ../views/view_login.php");
+		return;
+	}
 	$username = $_POST['username'];
 	$passwd = $_POST['passwd'];
 	$_SESSION['error'] = null;
@@ -31,7 +41,7 @@ try {
 		header("Location: ../views/view_login.php");
 		return;
 	}
-	connect_user($username);
+	login($username);
 	header("Location: ../index.php");
 } catch (PDOException $e) {
 	$_SESSION['error'] = "ERROR: ".$e->getMessage();

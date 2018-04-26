@@ -36,7 +36,7 @@ function check_passwd($username, $passwd) {
 	return (0);
 }
 
-function connect_user($username) {
+function login($username) {
 	$dbh = get_db();
 	$req = $dbh->prepare("SELECT `firstname`,`lastname`,`id` FROM `users` WHERE `username`=:username");
 	$req->bindValue(':username', $username, PDO::PARAM_STR);
@@ -48,4 +48,10 @@ function connect_user($username) {
 	$_SESSION['lastname'] = $row['lastname'];
 	return (0);
 }
+
+function logout() {
+	session_unset ();
+	session_destroy ();
+}
+
 ?>

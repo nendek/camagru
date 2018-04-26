@@ -3,6 +3,10 @@ session_start();
 require_once('../models/model_activation.php');
 
 try {
+	if (isset($_SESSION['id'])) {
+		header("Location: ../index.php");
+		return;
+	}
 	$username = $_GET['user'];
 	$token = $_GET['token'];
 	$_SESSION['error'] = null;

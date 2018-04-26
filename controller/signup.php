@@ -3,6 +3,14 @@ session_start();
 require_once('../models/model_signup.php');
 
 try {
+	if (isset($_SESSION['id'])) {
+		header("Location: ../index.php");
+		return;
+	}
+	if (!(isset($_POST['submit']) && $_POST['submit'] === "OK")) {
+		header("Location: ../views/view_signup.php");
+		return;
+	}
 	$lastname = $_POST['lastname'];
 	$firstname = $_POST['firstname'];
 	$email = $_POST['email'];
