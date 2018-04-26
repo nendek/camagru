@@ -16,7 +16,7 @@
 			} else { 
 			?>
 			<a href="../controller/signup.php">signup !</a>
-				<a href="../controller/login.php">login !</a>
+			<a href="../controller/login.php">login !</a>
 			<?php
 			}
 			?>

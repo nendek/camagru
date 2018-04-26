@@ -4,7 +4,7 @@ $title = 'Camagru-login';
 ob_start();
 ?>
 <div class="title">LOGIN</div>
-	<form method="post" action="../controller/login.php">
+	<form method="post" action="../index.php?action=login">
 		<label for="form-username">Username:</label>
 		<input id="form-username" name="username" placeholder="your username" maxlength="50" minlength="2" type="text">
 		<label for="form-passwd">Password:</label>

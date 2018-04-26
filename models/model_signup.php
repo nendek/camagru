@@ -1,6 +1,5 @@
 <?php
-
-require 'model_connect.php';
+require('./model_connect.php');
 
 function check_user_mail($username, $email) {
 	$email = strtolower($email);

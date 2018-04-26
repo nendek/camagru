@@ -1,5 +1,5 @@
 <?php
-require 'model_connect.php';
+require './models/model_connect.php';
 
 function get_token($username) {
 	$dbh = get_db();

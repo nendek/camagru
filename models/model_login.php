@@ -1,6 +1,6 @@
 <?php
 
-require 'model_connect.php';
+require('./models/model_connect.php');
 
 function check_user($username) {
 	$dbh = get_db();
