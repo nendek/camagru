@@ -2,22 +2,31 @@
 session_start();
 
 require('./controller/login.php');
+require('./controller/signup.php');
+require('./controller/activation.php');
+require('./controller/home.php');
 
 try {
 	if (isset($_GET['action'])) {
 		if ($_GET['action'] == 'login' || $_GET['action'] == 'logout') {
-				connexion();
-			} else if ($_GET['action'] == 'signup') {
-				signup();
-			}else if ($_GET['action'] == 'login' || $_GET['action'] == 'logout') {
-				connexion();
-			}	
-		else
+			connexion();
+		} else if ($_GET['action'] == 'signup') {
+			signup();
+		} else if ($_GET['action'] = 'validation') {
+			if (isset($_GET['user']) && isset($_GET['token'])) {
+				$user = $_GET['user'];
+				$token = $_GET['token'];
+				activation($user, $token);
+			} else
+				throw new Exception("BAD ACTIVATION");
+		}
+		else if ($_GET['action'] == 'login' || $_GET['action'] == 'logout') {
+			connexion();
+		} else
 			throw new Exception("BAD ACTION");
-	}
-	else {
+	} else {
 		echo 'coucou';
-//		home();
+		home();
 	}
 }
 catch (Exception $e) {
@@ -26,15 +35,4 @@ catch (Exception $e) {
 	$_SESSION['error'] = null;
 	return(-1);
 }
-?>
-
-<?php
-/*
-echo "\n";
-echo "username: ".$_SESSION['username']."\n";
-echo "id :".$_SESSION['id']."\n";
-echo "firstname :".$_SESSION['firstname']."\n";
-echo "lastname :".$_SESSION['lastname']."\n";
-echo "error :".$_SESSION['error']."\n";
- */
 ?>

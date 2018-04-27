@@ -2,13 +2,11 @@
 
 require('./models/model_activation.php');
 
-function activation() {
+function activation($username, $token) {
 	if (isset($_SESSION['id'])) {
 		header("Location: ./index.php");
 		return;
 	}
-	$username = $_GET['user'];
-	$token = $_GET['token'];
 	$_SESSION['error'] = null;
 
 	$row = get_token($username);
@@ -21,7 +19,7 @@ function activation() {
 			return;
 		}
 		if ($token == $token_db) {
-			activation($username);
+			validation($username);
 			header("Location: ./views/view_activation.php");
 			return;
 		} else {

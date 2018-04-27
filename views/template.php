@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +15,17 @@
 			<?php
 			if (isset($_SESSION['username'])) {
 			?>
-			<a href="../controller/login.php">logout !</a>
+			<a href="../index.php?action=logout">logout !</a>
+			<p>Welcome <?=$_SESSION['firstname']?> to camagru !</p>
 			<?php
 			} else { 
 			?>
-			<a href="../controller/signup.php">signup !</a>
-			<a href="../controller/login.php">login !</a>
+			<a href="../index.php?action=signup">signup !</a>
+			<a href="../index.php?action=login">login !</a>	
+			<p>Welcome to camagru !</p>
 			<?php
 			}
 			?>
-			<p>Welcome to camagru !</p>
 		  </header>
 		  <div id="contents">
 			<?= $contents ?>
@@ -32,3 +37,17 @@
 	</div>
 </body>
 </html>
+
+
+
+
+<?php
+
+echo "\n";
+echo "username: ".$_SESSION['username']."\n";
+echo "id :".$_SESSION['id']."\n";
+echo "firstname :".$_SESSION['firstname']."\n";
+echo "lastname :".$_SESSION['lastname']."\n";
+echo "error :".$_SESSION['error']."\n";
+
+?>

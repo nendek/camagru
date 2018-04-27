@@ -1,5 +1,5 @@
 <?php
-require('./model_connect.php');
+require_once('./models/model_connect.php');
 
 function check_user_mail($username, $email) {
 	$email = strtolower($email);
@@ -17,7 +17,7 @@ function check_user_mail($username, $email) {
 }
 
 function add_new_user($lastname, $firstname, $email, $username, $passwd, $verified) {
-	require '../config/database.php';
+	require './config/database.php';
 	$dbh = get_db();
 	//encrypt password
 	$passwd = hash("whirlpool", $passwd);
@@ -41,7 +41,7 @@ function add_new_user($lastname, $firstname, $email, $username, $passwd, $verifi
 		Pour activer votre compte, veuillez cliquer sur le lien ci dessous
 		ou copier/coller dans votre navigateur internet.
 
-		http://camagru.com/activation.php?user='.urlencode($username).'&token='.urlencode($token).'
+		http://camagru.com/index.php?action=validation&user='.urlencode($username).'&token='.urlencode($token).'
 
 
 	---------------

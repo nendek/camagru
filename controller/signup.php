@@ -2,7 +2,7 @@
 
 require('./models/model_signup.php');
 
-function signup.php() {
+function signup() {
 	if (isset($_SESSION['id'])) {
 		header("Location: ./index.php");
 		return;
@@ -69,6 +69,6 @@ function signup.php() {
 		return;
 	}
 	else
-		header("Location: ../views/view_success_signup.php");
+		header("Location: ./views/view_success_signup.php");
 }
 ?>
