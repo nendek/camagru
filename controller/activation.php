@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require('./models/model_activation.php');
 
 function activation($username, $token) {

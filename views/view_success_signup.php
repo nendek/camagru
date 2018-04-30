@@ -1,5 +1,6 @@
 <?php
 $title = 'Camagru-signup';
+session_start();
 ob_start();
 ?>
 <div class="title">SUCCESS SIGNUP !</div>
