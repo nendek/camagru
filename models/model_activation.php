@@ -20,5 +20,6 @@ class Activation extends Model {
 		$req = execReq($req, $array, $typeArray);
 		return (0);
 	}
+
 }
 ?>

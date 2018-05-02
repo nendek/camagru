@@ -51,7 +51,7 @@ class Login extends Model {
 		return (0);
 	}
 
-	function logout() {
+	public function logout() {
 		session_unset ();
 		session_destroy ();
 	}

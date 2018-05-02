@@ -1,36 +1,46 @@
 <?php
 session_start();
 require('./models/model_activation.php');
+require('./views/view.php');
 
-function activation($username, $token) {
-	if (isset($_SESSION['id'])) {
-		header("Location: ./index.php");
-		return;
+class ControllerActivation {
+
+	private activation;
+
+	public function __construct() {
+		$this->activation = new Activation();
 	}
-	$_SESSION['error'] = null;
 
-	$row = get_token($username);
-	if ($row) {
-		$token_db = $row['token'];
-		$verified = $row['verified'];
-		if ($verified == 1) {
-			$_SESSION['error'] = "The account as already activate";
-			header("Location: ./views/view_activation.php");
+	public function activation($username, $token) {
+		if (isset($_SESSION['id'])) {
+			header("Location: ./index.php");
 			return;
 		}
-		if ($token == $token_db) {
-			validation($username);
-			header("Location: ./views/view_activation.php");
-			return;
+		$_SESSION['error'] = null;
+		$row = $this->activation->get_token($username);
+		$view = New View("validation");
+		if ($row) {
+			$token_db = $row['token'];
+			$verified = $row['verified'];
+			if ($verified == 1) {
+				$_SESSION['error'] = "The account as already activate";
+				$view->generate();
+				return;
+			}
+			if ($token == $token_db) {
+				$this->activation->validation($username);
+				$view->generate();
+				return;
+			} else {
+				$_SESSION['error'] = "The account can not be create";
+				$view->generate();
+				return;
+			}
 		} else {
-			$_SESSION['error'] = "The account can not be create";
-			header("Location: ./views/view_activation.php");
+			$_SESSION['error'] = "The user doesn't not exist";
+			$view->generate();
 			return;
 		}
-	} else {
-		$_SESSION['error'] = "The user doesn't not exist";
-		header("Location: ./views/view_activation.php");
-		return;
 	}
 }
 
