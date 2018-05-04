@@ -1,6 +1,7 @@
 <?php
 session_start();
-$this->title = 'Camagru-signup';
+$title = 'Camagru-signup';
+ob_start();
 ?>
 	<div class="title">SIGNUP</div>
 	<form method="post" action="../index.php?action=signup">
@@ -24,3 +25,5 @@ if (isset($_SESSION['error'])) {
 	$_SESSION['error'] = null;
 }
 ?>
+<?php $contents = ob_get_clean(); ?>
+<?php require 'template.php'; ?>

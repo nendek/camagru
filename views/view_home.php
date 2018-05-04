@@ -1,6 +1,8 @@
-<?php $this->title = 'Camagru-Home'; ?>
+<?php $title = 'Camagru-Home'; ?>
 
-<?php
-session_start();
-?>
+<?php ob_start() ?>
 <p>Coucou MEC</p>
+
+<?php $contents = ob_get_clean(); ?>
+
+<?php require 'template.php'; ?>

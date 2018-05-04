@@ -1,6 +1,7 @@
 <?php
 session_start();
-$this->title = 'Camagru-validation';
+$title = 'Camagru-validation';
+ob_start();
 ?>
 <div class="title">VALIDATION</div>
 <?php
@@ -14,4 +15,6 @@ if (isset($_SESSION['error']))
 <span>Validation success, welcom to CAMAGRU</span>;
 <?php
 }
+$contents = ob_get_clean();
+require 'template.php';
 ?>
