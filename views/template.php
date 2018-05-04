@@ -13,9 +13,10 @@ session_start();
 		<header>
 			<a href="../index.php"><h1 id="titleSite">Camagru</h1></a>
 			<?php
-			if (isset($_SESSION['username'])) {
+			if (isset($_SESSION['id'])) {
 			?>
 			<a href="../index.php?action=logout">logout !</a>
+			<a href="../index.php?action=modif">modif account !</a>
 			<p>Welcome <?=$_SESSION['firstname']?> to camagru !</p>
 			<?php
 			} else { 

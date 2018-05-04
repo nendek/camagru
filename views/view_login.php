@@ -12,6 +12,12 @@ ob_start();
 		<input name="submit" id="form-submit" type="submit" value="OK">
 	</form>
 <?php
+if (!isset($_SESSION['id'])) {
+?>
+	<a href="../index.php?action=forgot_passwd">forgot password</a>
+	
+<?php
+}
 if (isset($_SESSION['error'])) {
 	echo $_SESSION['error'];
 	$_SESSION['error'] = null;
