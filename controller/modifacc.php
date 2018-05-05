@@ -7,12 +7,12 @@ function modifacc() {
 }
 
 function send_forgot_passwd() {
-	if (!(isset($_POST['submit_passwd']) && $_POST['submit_passwd'] === "OK")) {
+	if (!(isset($_POST['submit_email']) && $_POST['submit_email'] === "OK")) {
 		header("Location: ./views/view_modifacc.php?action=send_forgot_passwd");
 		return;
 	}
 	$email = $_POST['email'];
-	$token_email = get_token($email);
+	$token_email = get_token_forgot($email);
 	if ($token_email == -1) {
 		header("Location: ./views/view_modifacc.php?action=forgot_passwd");
 		return (0);

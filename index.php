@@ -21,14 +21,16 @@ try {
 			} else {
 				throw new Exception("BAD ACTIVATION");
 			}
-		} elseif ($_GET['action'] == 'forgot_passwd') {
+		} elseif ($_GET['action'] == 'recup_passwd') {
 			if (isset($_GET['user']) && isset($_GET['token'])) {
 				$user = $_GET['user'];
 				$token = $_GET['token'];
 				modif_passwd($user, $token);
 			} else {
-				send_forgot_passwd();
+				throw new Exception("BAD RECUP PASSWORD");
 			}
+		} elseif ($_GET['action'] == 'forgot_passwd') {
+			send_forgot_passwd();
 		} else {
 			throw new Exception("BAD ACTION");
 		}

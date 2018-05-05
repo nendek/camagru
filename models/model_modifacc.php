@@ -1,7 +1,7 @@
-<?
+<?php
 require_once('./models/model_connect.php');
 
-function get_token($email) {
+function get_token_forgot($email) {
 	$email = strtolower($email);
 	$dbh = get_db();
 	$req = $dbh->prepare("SELECT `token` FROM `users` WHERE `email`=:email");
@@ -18,7 +18,7 @@ function get_token($email) {
 
 function mail_reset_passwd($token) {
 	$dbh = get_db();
-	$req = $dbh->prepare("SELECT `email`, `username` FROM `users` WHRE `token`=:token");
+	$req = $dbh->prepare("SELECT `email`, `username` FROM `users` WHERE `token`=:token");
 	$req->bindValue(':token', $token, PDO::PARAM_STR);
 	$req->execute();
 	$row = $req->fetch();
@@ -29,7 +29,7 @@ function mail_reset_passwd($token) {
 
 		Pour renitialiser votre mdp cliquer sur le lien ci dessous.
 
-		http://camagru.com/index.php?action=forgot_passwdf&user='.urlencode($row['username']).'&token='.urlencode($token).'
+		http://camagru.com/index.php?action=reset_passwd&user='.urlencode($row['username']).'&token='.urlencode($token).'
 
 
 	---------------
@@ -43,6 +43,8 @@ function push_new_passwd($username, $passwd) {
 	$req = $dbh->prepare("UPDATE `users` SET `passwd`=:passwd WHERE `username`=:username");
 	$req->bindValue(':passwd', $passwd, PDO::PARAM_STR);
 	$req->bindValue(':username', $username, PDO::PARAM_STR);
-	$req->execute();
+	$req->execute(); 
 	return (0);
 }
+
+?>
