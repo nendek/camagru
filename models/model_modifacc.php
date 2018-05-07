@@ -39,12 +39,32 @@ return (0);
 }
 
 function push_new_passwd($username, $passwd) {
+	$passwd = hash("whirlpool", $passwd);
 	$dbh = get_db();
 	$req = $dbh->prepare("UPDATE `users` SET `passwd`=:passwd WHERE `username`=:username");
 	$req->bindValue(':passwd', $passwd, PDO::PARAM_STR);
 	$req->bindValue(':username', $username, PDO::PARAM_STR);
 	$req->execute(); 
 	return (0);
+}
+
+function check_user_forgot($username, $token) {
+	$dbh = get_db();
+	$req = $dbh->prepare("SELECT `username` FROM `users` WHERE `token`=:token");
+	$req->bindValue(':token', $token, PDO::PARAM_STR);
+	$req->execute();
+	$row = $req->fetch();
+	if (!$row) {
+		$_SESSION['error'] = "User or token doesn't exist";
+		$req->closeCursor();
+		return (-1);
+	}
+	if ($row['username'] != $username) {
+		$_SESSION['error'] = "User or token doesn't exist";
+		$req->closeCursor();
+		return (-1);
+	}
+	return (1);
 }
 
 ?>

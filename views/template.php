@@ -16,7 +16,7 @@ session_start();
 			if (isset($_SESSION['id'])) {
 			?>
 			<a href="../index.php?action=logout">logout !</a>
-			<a href="../index.php?action=modif">modif account !</a>
+			<a href="../index.php?action=modif_acc">modif account !</a>
 			<p>Welcome <?=$_SESSION['firstname']?> to camagru !</p>
 			<?php
 			} else { 
@@ -38,9 +38,6 @@ session_start();
 	</div>
 </body>
 </html>
-
-
-
 
 <?php
 

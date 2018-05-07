@@ -21,7 +21,7 @@ function signup() {
 	$_SESSION['error'] = null;
 
 	//check empty fields
-	if ($firstname == "" || $firstname == null || $lastname == "" || $lastname == null || $email == "" || $email == null || $username == "" || $username == null || $passwd == "" || $passwd == null) {
+	if ($firstname == "" || $firstname == null || $lastname == "" || $lastname == null || $email == "" || $email == null || $username == "" || $username == null || $passwd == "" || $passwd == null || $passwd_conf == "" || $passwd_conf == null) {
 		$_SESSION['error'] = "You need to fill all fields";
 		header("Location: ./views/view_signup.php");
 		return;

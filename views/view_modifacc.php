@@ -46,6 +46,16 @@ if (isset($_GET['action'])) {
 		<input name="submit_email" class="form-submit" type="submit" value="OK">
 	</form>
 <?php
+	} if ($_GET['action'] == 'reset_forgot_passwd') {
+?>
+	<form method="post" action="../index.php?action=reset_passwd">
+		<label for="form-passwd">Password:</label>
+		<input id="form-passwd" name="passwd" placeholder="your password" maxlength="50" minlength="6" type="password">
+		<label for="form-passwd-conf">Password:</label>
+		<input id="form-passwd-conf" name="passwd_conf" placeholder="confirm your password" maxlength="50" minlength="6" type="password">
+		<input name="submit_passwd" class="form-submit" type="submit" value="OK">
+	</form>
+<?php
 	}
 	if ($_GET['action'] == 'mail_send') {
 ?>

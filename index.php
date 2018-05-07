@@ -21,17 +21,21 @@ try {
 			} else {
 				throw new Exception("BAD ACTIVATION");
 			}
-		} elseif ($_GET['action'] == 'recup_passwd') {
+		} elseif ($_GET['action'] == 'reset_passwd') {
 			if (isset($_GET['user']) && isset($_GET['token'])) {
 				$user = $_GET['user'];
 				$token = $_GET['token'];
-				modif_passwd($user, $token);
+				reset_forgot_passwd($user, $token);
+			} elseif (isset($_SESSION['user_forgot'])) {
+				modif_passwd_forgot();
 			} else {
 				throw new Exception("BAD RECUP PASSWORD");
 			}
 		} elseif ($_GET['action'] == 'forgot_passwd') {
 			send_forgot_passwd();
-		} else {
+		}elseif ($_GET['action'] == 'modif_acc']) {
+			modif_acc();
+		}else {
 			throw new Exception("BAD ACTION");
 		}
 	} else {
@@ -42,6 +46,6 @@ try {
 	$_SESSION['error'] = "ERROR: ".$e->getMessage();
 	require('./views/view_error.php');
 	$_SESSION['error'] = null;
-	return(-1);
+	return (-1);
 }
 ?>
