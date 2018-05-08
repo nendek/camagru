@@ -67,4 +67,32 @@ function check_user_forgot($username, $token) {
 	return (1);
 }
 
+function modif_lastname($new_lastname) {
+	if (!isset($_SESSION['id'])) {
+		$_SESSION['error'] = "PAS CONNECT";
+		return (-1);
+	}
+	$dbh = get_db();
+	$req = $dbh->prepare("UPDATE `users` SET `lastname`=:new_lastname WHERE `id`=:id");
+	$req->bindValue(':new_lastname', $new_lastname, PDO::PARAM_STR);
+	$req->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+	$req->execute(); 
+	$_SESSION['lastname'] = $new_lastname;
+	return (0);
+}
+
+function modif_firstname($new_firstname) {
+	if (!isset($_SESSION['id'])) {
+		$_SESSION['error'] = "PAS CONNECT";
+		return (-1);
+	}
+	$dbh = get_db();
+	$req = $dbh->prepare("UPDATE `users` SET `firstname`=:new_firstname WHERE `id`=:id");
+	$req->bindValue(':new_firstname', $new_firstname, PDO::PARAM_STR);
+	$req->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+	$req->execute(); 
+	$_SESSION['firstname'] = $new_firstname;
+	return (0);
+}
+
 ?>

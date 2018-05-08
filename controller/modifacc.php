@@ -64,22 +64,85 @@ function modif_acc() {
 		require('./views/view_error.php');
 	}
 	if (isset($_POST['submit_lastname']) && $_POST['submit_lastname'] === "OK") {
+		$lastname = $_POST['lastname'];
+		if ($lastname == "" || $lastname == null) {
+			$_SESSION['error'] = "You need to fill all fields";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if (strlen($lastname) > 50 || strlen($lastname) < 2 || !ctype_alpha($lastname)) {
+			$_SESSION['error'] = "The last name must be between 2 and 50 characters and contain only alphabetic characters";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		modif_lastname($lastname);
 
 	} elseif (isset($_POST['submit_firstname']) && $_POST['submit_firstname'] === "OK") {
+		$firstname = $_POST['firstname'];
+		if ($firstname == "" || $firstname == null) {
+			$_SESSION['error'] = "You need to fill all fields";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if (strlen($firstname) > 50 || strlen($firstname) < 2 || !ctype_alpha($firstname)) {
+			$_SESSION['error'] = "The first name must be between 2 and 50 characters and contain only alphabetic characters";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		modif_firstname($firstname);
 
 	} elseif (isset($_POST['submit_email']) && $_POST['submit_email'] === "OK") {
+		$email = $_POST['email'];
+		if ($email == "" || $email == null) {
+			$_SESSION['error'] = "You need to fill all fields";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$_SESSION['error'] = "You need to enter a valid email";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if (check_email($email) == -1) {
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
 
 	} elseif (isset($_POST['submit_username']) && $_POST['submit_username'] === "OK") {
+		$username = $_POST['username'];
+		if ($username == "" || $username == null) {
+			$_SESSION['error'] = "You need to fill all fields";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if (strlen($username) > 50 || strlen($username) < 2 || !ctype_alnum($username)) {
+			$_SESSION['error'] = "The user name must be between 2 and 50 characters and contain only alphanumeric characters";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if (check_user($username) == -1) {
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
 
 	} elseif (isset($_POST['submit_passwd']) && $_POST['submit_passwd'] === "OK") {
+		$passwd = $_POST['passwd'];
+		$passwd_conf = $_POST['passwd_conf'];
+		if (strcmp($passwd, $passwd_conf) != 0) {
+			$_SESSION['error'] = "The two password are different";
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
+			return;
+		}
+		if (strlen($passwd) > 50 || strlen($passwd) < 2) {
+			$_SESSION['error'] = "The password must be between 2 and 50 characters";
+			header("Location: ./views/view_signup.php");
+			return;
+		}
 
 	} else {
 		header("Location: ./views/view_modifacc.php?action=modif_acc");
 		return;
 	}
-
-
-
 }
 
 ?>

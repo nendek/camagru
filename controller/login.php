@@ -32,7 +32,7 @@ function connexion() {
 		header("Location: ./views/view_login.php");
 		return;
 	}
-	if (check_user($username) == -1) {
+	if (check_user_verif($username) == -1) {
 		header("Location: ./views/view_login.php");
 		return;
 	}

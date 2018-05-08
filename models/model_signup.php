@@ -1,11 +1,23 @@
 <?php
 require_once('./models/model_connect.php');
 
-function check_user_mail($username, $email) {
+function check_user($username) {
+	$dbh = get_db();
+	$req = $dbh->prepare("SELECT `id` FROM `users` WHERE `username`=:username");
+	$req->bindValue(':username', $username, PDO::PARAM_STR);
+	$req->execute();
+	if ($tmp = $req->fetch()) {
+		$_SESSION['error'] = "user already exist";
+		$req->closeCursor();
+		return(-1);
+	}
+	return (0);
+}
+
+function check_email($email) {
 	$email = strtolower($email);
 	$dbh = get_db();
-	$req = $dbh->prepare("SELECT `id` FROM `users` WHERE `username`=:username OR `email`=:email");
-	$req->bindValue(':username', $username, PDO::PARAM_STR);
+	$req = $dbh->prepare("SELECT `id` FROM `users` WHERE `email`=:email");
 	$req->bindValue(':email', $email, PDO::PARAM_STR);
 	$req->execute();
 	if ($tmp = $req->fetch()) {
@@ -15,7 +27,7 @@ function check_user_mail($username, $email) {
 	}
 	return (0);
 }
-
+ 
 function add_new_user($lastname, $firstname, $email, $username, $passwd, $verified) {
 	require './config/database.php';
 	$dbh = get_db();

@@ -60,7 +60,11 @@ function signup() {
 	}
 
 	//add to db
-	if (check_user_mail($username, $email) == -1) {
+	if (check_user($username) == -1) {
+		header("Location: ./views/view_signup.php");
+		return;
+	}
+	if (check_email($email) == -1) {
 		header("Location: ./views/view_signup.php");
 		return;
 	}

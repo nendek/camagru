@@ -2,7 +2,7 @@
 
 require_once('./models/model_connect.php');
 
-function check_user($username) {
+function check_user_verif($username) {
 	$dbh = get_db();
 	$req = $dbh->prepare("SELECT `verified` FROM `users` WHERE `username`=:username");
 	$req->bindValue(':username', $username, PDO::PARAM_STR);
