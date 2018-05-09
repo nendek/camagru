@@ -31,38 +31,44 @@ function modif_passwd_forgot() {
 		$_SESSION['error'] = "ERROR CHANGE FORGOT PASSWORD";
 		require('./views/view_error.php');
 	}
-	if (!(isset($_POST['submit_passwd']) && $_POST['submit_passwd'] === "OK")) {
-		header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
-		return;
-	}
-	$passwd = $_POST['passwd'];
-	$passwd_conf = $_POST['passwd_conf'];
+	if (isset($_POST['submit_passwd']) && $_POST['submit_passwd'] === "OK") {
 
-	if ($passwd == "" || $passwd == null || $passwd_conf == "" || $passwd_conf == null) {
-		$_SESSION['error'] = "You need to fill all fields";
+		$passwd = $_POST['passwd'];
+		$passwd_conf = $_POST['passwd_conf'];
+
+		if ($passwd == "" || $passwd == null || $passwd_conf == "" || $passwd_conf == null) {
+			$_SESSION['error'] = "You need to fill all fields";
+			header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+			return;
+		}
+		if (strcmp($passwd, $passwd_conf) != 0) {
+			$_SESSION['error'] = "The two password are different";
+			header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+			return;
+		}
+		if (strlen($passwd) > 50 || strlen($passwd) < 2) {
+			$_SESSION['error'] = "The password must be between 2 and 50 characters";
+			header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+			return;
+		}
+		push_new_passwd($_SESSION['user_forgot'], $passwd);
+		$_SESSION['user_forgot'] = null;
+		$_SESSION['msg'] = "Password reset ok, please login";
+		header("Location: ./views/view_msg.php");
+	} else {
 		header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
 		return;
 	}
-	if (strcmp($passwd, $passwd_conf) != 0) {
-		$_SESSION['error'] = "The two password are different";
-		header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
-		return;
-	}
-	if (strlen($passwd) > 50 || strlen($passwd) < 2) {
-		$_SESSION['error'] = "The password must be between 2 and 50 characters";
-		header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
-		return;
-	}
-	push_new_passwd($_SESSION['user_forgot'], $passwd);
-	$_SESSION['user_forgot'] = null;
-	header("Location: ./index.php");
 }
 
 function modif_acc() {
+
 	if (!(isset($_SESSION['id']))) {
 		$_SESSION['error'] = "ERROR MODIFICATION";
 		require('./views/view_error.php');
+		return(-1);
 	}
+
 	if (isset($_POST['submit_lastname']) && $_POST['submit_lastname'] === "OK") {
 		$lastname = $_POST['lastname'];
 		if ($lastname == "" || $lastname == null) {
@@ -107,6 +113,7 @@ function modif_acc() {
 			header("Location: ./views/view_modifacc.php?action=modif_acc");
 			return;
 		}
+		modif_email($email);
 
 	} elseif (isset($_POST['submit_username']) && $_POST['submit_username'] === "OK") {
 		$username = $_POST['username'];
@@ -124,6 +131,7 @@ function modif_acc() {
 			header("Location: ./views/view_modifacc.php?action=modif_acc");
 			return;
 		}
+		modif_username($username);
 
 	} elseif (isset($_POST['submit_passwd']) && $_POST['submit_passwd'] === "OK") {
 		$passwd = $_POST['passwd'];
@@ -135,14 +143,13 @@ function modif_acc() {
 		}
 		if (strlen($passwd) > 50 || strlen($passwd) < 2) {
 			$_SESSION['error'] = "The password must be between 2 and 50 characters";
-			header("Location: ./views/view_signup.php");
+			header("Location: ./views/view_modifacc.php?action=modif_acc");
 			return;
 		}
+		modif_passwd($passwd);
 
-	} else {
+	} else
 		header("Location: ./views/view_modifacc.php?action=modif_acc");
-		return;
-	}
 }
 
 ?>

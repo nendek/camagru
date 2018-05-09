@@ -46,6 +46,7 @@ function login($username) {
 	$_SESSION['id'] = $row['id'];
 	$_SESSION['firstname'] = $row['firstname'];
 	$_SESSION['lastname'] = $row['lastname'];
+	$_SESSION['email'] = $row['email'];
 	return (0);
 }
 

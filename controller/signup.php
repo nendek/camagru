@@ -4,7 +4,8 @@ require('./models/model_signup.php');
 
 function signup() {
 	if (isset($_SESSION['id'])) {
-		header("Location: ./index.php");
+		$_SESSION['error'] = "User already connect";
+		header("Location: ./views/view_error.php");
 		return;
 	}
 	if (!(isset($_POST['submit']) && $_POST['submit'] === "OK")) {
@@ -68,11 +69,14 @@ function signup() {
 		header("Location: ./views/view_signup.php");
 		return;
 	}
+
 	if (add_new_user($lastname, $firstname, $email, $username, $passwd, $verified) == -1) {
 		header("Location: ./views/view_signup.php");
 		return;
 	}
-	else
-		header("Location: ./views/view_success_signup.php");
+	else {
+		$_SESSION['msg'] = "Signup success please check your mail box for confirmation your account.";
+		header("Location: ./views/view_msg.php");
+	}
 }
 ?>

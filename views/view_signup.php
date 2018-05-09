@@ -19,6 +19,39 @@ ob_start();
 		<input id="form-passwd-conf" name="passwd_conf" placeholder="confirm your password" maxlength="50" minlength="6" type="password">
 		<input name="submit" id="form-submit" type="submit" value="OK">
 	</form>
+	<div id="errors"></div>
+<?php /*
+<script>
+document.queryselector("#form-lastname").addEventListener("focusout",function(){
+	var lastname = document.queryselector("#form-lastname");
+
+	if (lastname.value == "")
+		lastname.style.borderColor = "red";
+});
+
+document.queryselector("#form-submit").addEventListener("click",function(){
+	var lastname = document.queryselector("#form-lastname");
+	if (lastname.value == "")
+	{
+		var errors = [];
+		event.preventDefault();
+		if (lastname.value == "")
+			errors.push("Il manque ton nom de famille");
+		
+			errors.push("Il manque ton nom 2");
+			errors.push("Il manque ton nom de famill 324234 e");
+			errors.push("Il manque ton nom de famill 4324243e");
+			var error_div = document.queryselector("#errors");
+			errors.foreach(function(error){
+					var newelem = document.createElement("p");
+					newelem.className += "erreur";
+					newelem.innerHTML = error;
+					error_div.appendChild(newelem);
+			});
+	}
+});
+</script>
+*/ ?>
 <?php
 if (isset($_SESSION['error'])) {
 	echo $_SESSION['error'];

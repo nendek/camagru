@@ -68,10 +68,6 @@ function check_user_forgot($username, $token) {
 }
 
 function modif_lastname($new_lastname) {
-	if (!isset($_SESSION['id'])) {
-		$_SESSION['error'] = "PAS CONNECT";
-		return (-1);
-	}
 	$dbh = get_db();
 	$req = $dbh->prepare("UPDATE `users` SET `lastname`=:new_lastname WHERE `id`=:id");
 	$req->bindValue(':new_lastname', $new_lastname, PDO::PARAM_STR);
@@ -82,16 +78,42 @@ function modif_lastname($new_lastname) {
 }
 
 function modif_firstname($new_firstname) {
-	if (!isset($_SESSION['id'])) {
-		$_SESSION['error'] = "PAS CONNECT";
-		return (-1);
-	}
 	$dbh = get_db();
 	$req = $dbh->prepare("UPDATE `users` SET `firstname`=:new_firstname WHERE `id`=:id");
 	$req->bindValue(':new_firstname', $new_firstname, PDO::PARAM_STR);
 	$req->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
 	$req->execute(); 
 	$_SESSION['firstname'] = $new_firstname;
+	return (0);
+}
+
+function modif_username($new_username) {
+	$dbh = get_db();
+	$req = $dbh->prepare("UPDATE `users` SET `username`=:new_username WHERE `id`=:id");
+	$req->bindValue(':new_username', $new_username, PDO::PARAM_STR);
+	$req->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+	$req->execute(); 
+	$_SESSION['username'] = $new_username;
+	return (0);
+}
+
+function modif_email($new_email) {
+	$dbh = get_db();
+	$req = $dbh->prepare("UPDATE `users` SET `email`=:new_email WHERE `id`=:id");
+	$req->bindValue(':new_email', $new_email, PDO::PARAM_STR);
+	$req->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+	$req->execute(); 
+	$_SESSION['email'] = $new_email;
+	return (0);
+}
+
+function modif_passwd($new_passwd) {
+	$new_passwd = hash("whirlpool", $new_passwd);
+	$dbh = get_db();
+	$req = $dbh->prepare("UPDATE `users` SET `passwd`=:new_passwd WHERE `id`=:id");
+	$req->bindValue(':new_passwd', $new_passwd, PDO::PARAM_STR);
+	$req->bindValue(':id', $_SESSION['id'], PDO::PARAM_STR);
+	$req->execute(); 
 	return (0);
 }
 
