@@ -5,11 +5,12 @@ ob_start();
 ?>
 	<div class="title">SIGNUP</div>
 	<form method="post" action="../index.php?action=signup">
+<label for="form-firstname">Firstname:</label>
+		<input id="form-firstname" name="firstname" placeholder="your firstname" maxlength="50" type="text">
+
 		<label for="form-lastname">Lastname:</label>
 		<input id="form-lastname" name="lastname" placeholder="your lastname" maxlength="50" type="text">
-		<label for="form-firstname">Firstname:</label>
-		<input id="form-firstname" name="firstname" placeholder="your firstname" maxlength="50" type="text">
-		<label for="form-email">Email:</label>
+				<label for="form-email">Email:</label>
 		<input id="form-email" name="email" placeholder="your email" maxlength="50" type="mail">
 		<label for="form-username">Username:</label>
 		<input id="form-username" name="username" placeholder="your username" maxlength="50" minlength="2" type="text">
@@ -20,16 +21,26 @@ ob_start();
 		<input name="submit" id="form-submit" type="submit" value="OK">
 	</form>
 	<div id="errors"></div>
-<?php /*
-<script>
-document.queryselector("#form-lastname").addEventListener("focusout",function(){
-	var lastname = document.queryselector("#form-lastname");
 
-	if (lastname.value == "")
-		lastname.style.borderColor = "red";
+<script>
+
+function parseTexte(e) {
+	console.log(e.target.id);
+	var texte = document.getElementById(e.target.id);
+	if (texte.value.length < 2 || texte.value.length > 50) {
+		texte.style.borderColor = "red";
+		return (1);
+	} else {
+		texte.style.borderColor = "green";
+		return (0);
+	}
+}
+
+document.querySelectorAll('form input[type="text"]').forEach(function(inp){
+	inp.addEventListener("focusout", parseTexte);
 });
 
-document.queryselector("#form-submit").addEventListener("click",function(){
+document.querySelector("#form-submit").addEventListener("click",function(){
 	var lastname = document.queryselector("#form-lastname");
 	if (lastname.value == "")
 	{
@@ -37,7 +48,6 @@ document.queryselector("#form-submit").addEventListener("click",function(){
 		event.preventDefault();
 		if (lastname.value == "")
 			errors.push("Il manque ton nom de famille");
-		
 			errors.push("Il manque ton nom 2");
 			errors.push("Il manque ton nom de famill 324234 e");
 			errors.push("Il manque ton nom de famill 4324243e");
@@ -50,8 +60,9 @@ document.queryselector("#form-submit").addEventListener("click",function(){
 			});
 	}
 });
+
 </script>
-*/ ?>
+
 <?php
 if (isset($_SESSION['error'])) {
 	echo $_SESSION['error'];

@@ -5,7 +5,8 @@ function connexion() {
 	if (isset($_SESSION['id'])) {
 		//logout
 		logout();
-		header("Location: ./index.php");
+		$_SESSION['msg'] = "logout ok";
+		header("Location: ./views/view_msg.php");
 		return;
 	}
 	if (isset($_POST['submit']) && $_POST['submit'] === "OK") {
