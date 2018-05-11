@@ -3,11 +3,9 @@
 require('./models/model_signup.php');
 
 function signup() {
-	if (isset($_SESSION['id'])) {
-		$_SESSION['error'] = "User already connect";
-		header("Location: ./views/view_error.php");
-		return;
-	}
+	if (isset($_SESSION['id']))
+		throw new Exception("User already connect");
+
 	if (!(isset($_POST['submit']) && $_POST['submit'] === "OK")) {
 		header("Location: ./views/view_signup.php");
 		return;

@@ -22,47 +22,8 @@ ob_start();
 	</form>
 	<div id="errors"></div>
 
-<script>
 
-function parseTexte(e) {
-	console.log(e.target.id);
-	var texte = document.getElementById(e.target.id);
-	if (texte.value.length < 2 || texte.value.length > 50) {
-		texte.style.borderColor = "red";
-		return (1);
-	} else {
-		texte.style.borderColor = "green";
-		return (0);
-	}
-}
-
-document.querySelectorAll('form input[type="text"]').forEach(function(inp){
-	inp.addEventListener("focusout", parseTexte);
-});
-
-document.querySelector("#form-submit").addEventListener("click",function(){
-	var lastname = document.queryselector("#form-lastname");
-	if (lastname.value == "")
-	{
-		var errors = [];
-		event.preventDefault();
-		if (lastname.value == "")
-			errors.push("Il manque ton nom de famille");
-			errors.push("Il manque ton nom 2");
-			errors.push("Il manque ton nom de famill 324234 e");
-			errors.push("Il manque ton nom de famill 4324243e");
-			var error_div = document.queryselector("#errors");
-			errors.foreach(function(error){
-					var newelem = document.createElement("p");
-					newelem.className += "erreur";
-					newelem.innerHTML = error;
-					error_div.appendChild(newelem);
-			});
-	}
-});
-
-</script>
-
+<script src="../scripts/script_parse_form.js"></script>
 <?php
 if (isset($_SESSION['error'])) {
 	echo $_SESSION['error'];

@@ -6,7 +6,8 @@ function check_user($username) {
 	$req = $dbh->prepare("SELECT `id` FROM `users` WHERE `username`=:username");
 	$req->bindValue(':username', $username, PDO::PARAM_STR);
 	$req->execute();
-	if ($tmp = $req->fetch()) {
+	$count = $req->rowCount();
+	if ($count !== 0) {
 		$_SESSION['error'] = "user already exist";
 		$req->closeCursor();
 		return(-1);
@@ -20,7 +21,8 @@ function check_email($email) {
 	$req = $dbh->prepare("SELECT `id` FROM `users` WHERE `email`=:email");
 	$req->bindValue(':email', $email, PDO::PARAM_STR);
 	$req->execute();
-	if ($tmp = $req->fetch()) {
+	$count = $req->rowCount();
+	if ($count !== 0) {
 		$_SESSION['error'] = "user or mail already exist"; //voir pour tester si mail ou username qui existe deja
 		$req->closeCursor();
 		return(-1);

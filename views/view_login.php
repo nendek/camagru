@@ -11,6 +11,8 @@ ob_start();
 		<input id="form-passwd" name="passwd" placeholder="your password" maxlength="50" minlength="6" type="password">
 		<input name="submit" id="form-submit" type="submit" value="OK">
 	</form>
+
+
 <?php
 if (!isset($_SESSION['id'])) {
 ?>
@@ -23,5 +25,6 @@ if (isset($_SESSION['error'])) {
 	$_SESSION['error'] = null;
 }
 ?>
+<script src="../scripts/script_parse_form.js"></script>
 <?php $contents = ob_get_clean(); ?>
 <?php require 'template.php'; ?>
