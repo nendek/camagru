@@ -38,7 +38,7 @@ function check_passwd($username, $passwd) {
 
 function login($username) {
 	$dbh = get_db();
-	$req = $dbh->prepare("SELECT `firstname`,`lastname`,`id` FROM `users` WHERE `username`=:username");
+	$req = $dbh->prepare("SELECT `firstname`,`lastname`,`id`, `email` FROM `users` WHERE `username`=:username");
 	$req->bindValue(':username', $username, PDO::PARAM_STR);
 	$req->execute();
 	$row = $req->fetch();

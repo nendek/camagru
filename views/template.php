@@ -46,6 +46,7 @@ echo "username: ".$_SESSION['username']."\n";
 echo "id :".$_SESSION['id']."\n";
 echo "firstname :".$_SESSION['firstname']."\n";
 echo "lastname :".$_SESSION['lastname']."\n";
+echo "email :".$_SESSION['email']."\n";
 echo "error :".$_SESSION['error']."\n";
 echo "msg :".$_SESSION['msg']."\n";
 

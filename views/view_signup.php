@@ -4,10 +4,9 @@ $title = 'Camagru-signup';
 ob_start();
 ?>
 	<div class="title">SIGNUP</div>
-	<form method="post" action="../index.php?action=signup">
-<label for="form-firstname">Firstname:</label>
+	<form method="post" action="../index.php?action=signup" name="form" onsubmit="return validateForm()">
+		<label for="form-firstname">Firstname:</label>
 		<input id="form-firstname" name="firstname" placeholder="your firstname" maxlength="50" type="text">
-
 		<label for="form-lastname">Lastname:</label>
 		<input id="form-lastname" name="lastname" placeholder="your lastname" maxlength="50" type="text">
 				<label for="form-email">Email:</label>

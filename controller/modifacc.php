@@ -4,17 +4,18 @@ require('./models/model_modifacc.php');
 
 function send_forgot_passwd() {
 	if (!(isset($_POST['submit_email']) && $_POST['submit_email'] === "OK")) {
-		header("Location: ./views/view_modifacc.php?action=send_forgot_passwd");
+		header("Location: ./views/view_forgot.php?action=send_forgot_passwd");
 		return;
 	}
 	$email = $_POST['email'];
 	$token_email = get_token_forgot($email);
 	if ($token_email == -1) {
-		header("Location: ./views/view_modifacc.php?action=send_forgot_passwd");
+		header("Location: ./views/view_forgot.php?action=send_forgot_passwd");
 		return (0);
 	}
 	mail_reset_passwd($token_email);
-	header("Location: ./views/view_modifacc.php?action=mail_send");
+	$_SESSION['msg'] = "MAIL SEND, PLEASE CHECK YOUR MAILBOX";
+	header("Location: ./views/view_msg.php");
 }
 
 function reset_forgot_passwd($user, $token) {
@@ -38,17 +39,17 @@ function modif_passwd_forgot() {
 
 		if ($passwd == "" || $passwd == null || $passwd_conf == "" || $passwd_conf == null) {
 			$_SESSION['error'] = "You need to fill all fields";
-			header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+			header("Location: ./views/view_forgot.php?action=reset_forgot_passwd");
 			return;
 		}
 		if (strcmp($passwd, $passwd_conf) != 0) {
 			$_SESSION['error'] = "The two password are different";
-			header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+			header("Location: ./views/view_forgot.php?action=reset_forgot_passwd");
 			return;
 		}
 		if (strlen($passwd) > 50 || strlen($passwd) < 2) {
 			$_SESSION['error'] = "The password must be between 2 and 50 characters";
-			header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+			header("Location: ./views/view_forgot.php?action=reset_forgot_passwd");
 			return;
 		}
 		push_new_passwd($_SESSION['user_forgot'], $passwd);
@@ -56,7 +57,7 @@ function modif_passwd_forgot() {
 		$_SESSION['msg'] = "Password reset ok, please login";
 		header("Location: ./views/view_msg.php");
 	} else {
-		header("Location: ./views/view_modifacc.php?action=reset_forgot_passwd");
+		header("Location: ./views/view_forgot.php?action=reset_forgot_passwd");
 		return;
 	}
 }
