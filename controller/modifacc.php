@@ -83,6 +83,7 @@ function modif_acc() {
 			return;
 		}
 		modif_lastname($lastname);
+		header("Location: ./views/view_modifacc.php?action=modif_acc");
 
 	} elseif (isset($_POST['submit_firstname']) && $_POST['submit_firstname'] === "OK") {
 		$firstname = $_POST['firstname'];
@@ -97,6 +98,7 @@ function modif_acc() {
 			return;
 		}
 		modif_firstname($firstname);
+		header("Location: ./views/view_modifacc.php?action=modif_acc");
 
 	} elseif (isset($_POST['submit_email']) && $_POST['submit_email'] === "OK") {
 		$email = $_POST['email'];
@@ -115,6 +117,7 @@ function modif_acc() {
 			return;
 		}
 		modif_email($email);
+		header("Location: ./views/view_modifacc.php?action=modif_acc");
 
 	} elseif (isset($_POST['submit_username']) && $_POST['submit_username'] === "OK") {
 		$username = $_POST['username'];
@@ -133,6 +136,7 @@ function modif_acc() {
 			return;
 		}
 		modif_username($username);
+		header("Location: ./views/view_modifacc.php?action=modif_acc");
 
 	} elseif (isset($_POST['submit_passwd']) && $_POST['submit_passwd'] === "OK") {
 		$passwd = $_POST['passwd'];
@@ -148,6 +152,7 @@ function modif_acc() {
 			return;
 		}
 		modif_passwd($passwd);
+		header("Location: ./views/view_modifacc.php?action=modif_acc");
 
 	} else
 		header("Location: ./views/view_modifacc.php?action=modif_acc");

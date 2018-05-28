@@ -11,14 +11,13 @@ ob_start();
 		<input id="form-passwd" name="passwd" placeholder="your password" maxlength="50" minlength="6" type="password">
 		<input name="submit" id="form-submit" type="submit" value="OK">
 	</form>
-	<div id="errors"></div>
+<div id="errors"></div>
 
 
 <?php
 if (!isset($_SESSION['id'])) {
 ?>
-	<a href="../index.php?action=forgot_passwd">forgot password</a>
-	
+	<a href="../index.php?action=forgot_passwd">forgot password</a>	
 <?php
 }
 if (isset($_SESSION['error'])) {
