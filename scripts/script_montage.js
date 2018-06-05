@@ -1,4 +1,3 @@
-var canvas = document.querySelector("#canvas");
 var displayCam = document.querySelector("#webcam");
 var noDisplayCam = document.querySelector("#no_webcam");
 
@@ -6,14 +5,22 @@ var video = document.createElement('video');
 var button = document.createElement('button');
 var textButton = document.createTextNode("TAKE PICTURE");
 var canvas = document.createElement('canvas');
+var send = document.createElement('button');
+var textSend = document.createTextNode("SAVE MONTAGE");
 
 var width = 510;
 var height = 510;
 
-var webcamAvailable = false;
-
 displayCam.style.display = "none";
 noDisplayCam.style.display = "none";
+
+canvas.id = 'canvas';
+canvas.width = width;
+canvas.height = height;
+
+send.className = 'button';
+send.appendChild(textSend);
+
 
 if (navigator.mediaDevices === undefined) {
 	navigator.mediaDevices = {};
@@ -48,24 +55,25 @@ function streaming(stream) {
 	video.style = "max-width:100%;background:#111;border:1px solid #666";
 	video.autoplay = true;
 
-	button.classiName = 'button';
+	button.className = 'button';
 	button.appendChild(textButton);
 	button.addEventListener('click', function(ev){
-		reduceImage(video, imageResult => {
-			if (!document.getElementById("image")) {
-				document.getElementById("webcam").appendChild(imageResult);
+		reduceimg(video, imgResult => {
+			if (!document.getElementById("img")) {
+				displayCam.appendChild(imgResult);
+				displayCam.appendChild(send);
 			} else {
-				old = document.getElementById("image");
-				old.parentNode.replaceChild(imageResult, old);
+				old = document.getElementById("img");
+				old.parentNode.replaceChild(imgResult, old);
 			}
 		});
 		ev.preventDefault();
 	}, false);
 
-	canvas.id = 'canvas';
 
-	document.getElementById("webcam").appendChild(video);
-	document.getElementById("webcam").appendChild(button);
+	displayCam.appendChild(video);
+	displayCam.appendChild(button);
+
 
 	if ("srcObject" in video) {
 		video.srcObject = stream;
@@ -76,21 +84,33 @@ function streaming(stream) {
 		video.play();
 		console.log('video play');
 	};
+
+	send.addEventListener('click', function(ev) {
+		uploadImg({
+			url: "none",
+			img: document.getElementById("img")
+		}, function (error, response) {
+			var data = document.createElement('div');
+			data.textContent = (error) ? error : response;
+			displayCam.appendChild(data);
+			displayCam.appendChild(imageResult);
+		});
+	});
 }
 
 function videoErr(err) {
 
 	noDisplayCam.style.display = "block";
 
-	document.getElementById("no_webcam").appendChild(
+	noDisplayCam.appendChild(
 		selectImg(inputFile => {
 			readImg(inputFile, img => {
-				reduceImage(img, imageResult => {
-					if (!document.getElementById("image")) {
-						document.getElementById("no_webcam").appendChild(imageResult);
+				reduceimg(img, imgResult => {
+					if (!document.getElementById("img")) {
+						noDisplayCam.appendChild(imgResult);
 					} else {
-						old = document.getElementById("image");
-						old.parentNode.replaceChild(imageResult, old);
+						old = document.getElementById("img");
+						old.parentNode.replaceChild(imgResult, old);
 					}
 					console.log(this.toString());
 				});
@@ -133,13 +153,13 @@ function readImg(inputFile, afterConversion) {
 	reader.readAsDataURL(inputFile.files[0]);
 }
 
-function reduceImage(imageSource, afterResizing) {
-	var	imageResult = document.createElement('img'),
+function reduceimg(imgSource, afterResizing) {
+	var	imgResult = document.createElement('img'),
 		context,
-		widthImg = imageSource.width,
-		heightImg = imageSource.height;
+		widthImg = imgSource.width,
+		heightImg = imgSource.height;
 
-	imageResult.id = 'image';
+	imgResult.id = 'img';
 	if (widthImg > heightImg) {
 		if (widthImg > width) {
 			heightImg *= width / widthImg;
@@ -163,24 +183,51 @@ function reduceImage(imageSource, afterResizing) {
 		}
 	}
 
-	canvas.width = width;
-	canvas.height = height;
 	context = canvas.getContext('2d');
-	context.drawImage(imageSource, 0, 0, width, height);
-	imageResult.addEventListener('load', function () {
-		afterResizing(imageResult, canvas);
+	context.drawImage(imgSource, 0, 0, width, height);
+	imgResult.addEventListener('load', function () {
+		afterResizing(imgResult, canvas);
 	});
 
-	imageResult.src = canvas.toDataURL('image/jpg', 0.8);
+	imgResult.src = canvas.toDataURL('image/jpg', 0.8);
 }
 
-function takePicture() {
-
-	canvas.width = width;
-	canvas.height = height;
-	canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-	var data = canvas.toDataURL('image/png');
-	return img.setAttribute('src', data);
-};
-
-
+function uploadImg(options, afterUploading) {
+	var xhr = new XMLHttpRequest(),
+		formData = new FormData();
+	url = options.url || new Error('`options.url` parameter invalid for `uploadimg` function.');
+	img = options.img || new Error('`options.img` parameter invalid for `uploadimg` function.');
+	if (url instanceof Error) {
+		throw url;
+	}
+	if (img instanceof Error) {
+		throw img;
+	}
+	formData.append('img', img.src);
+	xhr.open('POST', url, true);
+	xhr.addEventListener('load', function () {
+		if (xhr.status < 200 && xhr.status >= 400) {
+			return Function.namedParameters(afterUploading, {
+				error: new Error('XHR connection error for `uploadimg` function.'),
+				response: null
+			});
+		}
+		/**
+		 * What do after upload the img.
+		 * @callback uploadimg~callback
+		 * @param {Error}  [error]    - Return `null` if no error occur else return an `Error` object.
+		 * @param {string} [response] - Return the content of XHR response if no error occur, else return `null`.
+		 */
+		Function.namedParameters(afterUploading, {
+			error: null,
+			response: xhr.responseText
+		});
+	});
+	xhr.addEventListener('error', function (test) {
+		Function.namedParameters(afterUploading, {
+			error: new Error('XHR connection error for `uploadimg` function.'),
+			response: null
+		});
+	});
+	xhr.send(formData);
+}

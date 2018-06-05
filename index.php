@@ -33,9 +33,11 @@ try {
 			}
 		} elseif ($_GET['action'] == 'forgot_passwd') {
 			send_forgot_passwd();
-		}elseif ($_GET['action'] == 'modif_acc') {
+		} elseif ($_GET['action'] == 'modif_acc') {
 			modif_acc();
-		}else {
+		} elseif ($_GET['action'] == 'montage') {
+			//a faire
+		} else {
 			throw new Exception("BAD ACTION");
 		}
 	} else {
