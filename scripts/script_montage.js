@@ -41,9 +41,7 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
 	}
 }
 
-navigator.mediaDevices.getUserMedia({ video: true })
-	.then(streaming)
-	.catch(videoErr);
+navigator.mediaDevices.getUserMedia({ video: true }).then(streaming).catch(videoErr);
 
 function streaming(stream) {
 
@@ -70,10 +68,8 @@ function streaming(stream) {
 		ev.preventDefault();
 	}, false);
 
-
 	displayCam.appendChild(video);
 	displayCam.appendChild(button);
-
 
 	if ("srcObject" in video) {
 		video.srcObject = stream;
@@ -98,27 +94,42 @@ function streaming(stream) {
 			displayCam.appendChild(data);
 		});
 	});
-}
+};
 
 function videoErr(err) {
 
 	noDisplayCam.style.display = "block";
 
 	noDisplayCam.appendChild(
-		selectImg(inputFile => {
-			readImg(inputFile, img => {
-				reduceimg(img, imgResult => {
-					if (!document.getElementById("img")) {
-						noDisplayCam.appendChild(imgResult);
-					} else {
-						old = document.getElementById("img");
-						old.parentNode.replaceChild(imgResult, old);
-					}
-					console.log(this.toString());
-				});
+			selectImg(inputFile => {
+				readImg(inputFile, img => {
+					reduceimg(img, imgResult => {
+						if (!document.getElementById("img")) {
+							noDisplayCam.appendChild(imgResult);
+							noDisplayCam.appendChild(send);
+						} else {
+							old = document.getElementById("img");
+							old.parentNode.replaceChild(imgResult, old);
+						}
+						console.log(this.toString());
+					});
+				})
 			})
-		})
-	);
+			);
+	
+	send.addEventListener('click', function(ev) {
+		uploadImg({
+			url: "http://localhost:8080/camagru/index.php?action=upload",
+			img: document.getElementById("img")
+		}, function (res) {
+			var data = document.createElement('div');
+			var error = res.error;
+			var response = res.response;
+
+			data.textContent = (error) ? error : response;
+			noDisplayCam.appendChild(data);
+		});
+	});
 
 	console.log(err.name + ": " + err.message);
 };
@@ -129,76 +140,76 @@ function selectImg(afterSelect) {
 	inputFile.type = 'file';
 	inputFile.className = 'button';
 	inputFile.accept = 'image/*';
-	inputFile.addEventListener('change', function () {
-		if (afterSelect) {
-			afterSelect(inputFile);
-		}
-	}, false );
+							   inputFile.addEventListener('change', function () {
+							   if (afterSelect) {
+							   afterSelect(inputFile);
+							   }
+							   }, false );
 
-	return inputFile;
-};
+							   return inputFile;
+							   };
 
-function readImg(inputFile, afterConversion) {
-	var reader = new FileReader();
+							   function readImg(inputFile, afterConversion) {
+							   var reader = new FileReader();
 
-	reader.addEventListener('load', function() {
-		var img = document.createElement('img');
+							   reader.addEventListener('load', function() {
+							   var img = document.createElement('img');
 
-		img.addEventListener('load', function () {
-			if (afterConversion) {
-				afterConversion(img);
-			}
-		});
-		img.src = reader.result;
-	});
+							   img.addEventListener('load', function () {
+							   if (afterConversion) {
+							   afterConversion(img);
+							   }
+							   });
+							   img.src = reader.result;
+							   });
 
-	reader.readAsDataURL(inputFile.files[0]);
-}
+							   reader.readAsDataURL(inputFile.files[0]);
+							   };
 
-function reduceimg(imgSource, afterResizing) {
-	var	imgResult = document.createElement('img'),
-		context,
-		widthImg = imgSource.width,
-		heightImg = imgSource.height;
+							   function reduceimg(imgSource, afterResizing) {
+							   var	imgResult = document.createElement('img'),
+							   context,
+							   widthImg = imgSource.width,
+							   heightImg = imgSource.height;
 
-	imgResult.id = 'img';
-	if (widthImg > heightImg) {
-		if (widthImg > width) {
-			heightImg *= width / widthImg;
-			widthImg = width;
-		}
-	} else {
-		if (heightImg > height) {
-			widthImg *= height / heightImg;
-			heightImg = height;
-		}
-	}
-	if (widthImg < heightImg) {
-		if (widthImg < width) {
-			heightImg *= widthImg / width;
-			widthImg = width;
-		}
-	} else {
-		if (heightImg < height) {
-			widthImg *= heightImg / height;
-			heightImg = height;
-		}
-	}
+							   imgResult.id = 'img';
+							   if (widthImg > heightImg) {
+							   if (widthImg > width) {
+							   heightImg *= width / widthImg;
+							   widthImg = width;
+							   }
+							   } else {
+							   if (heightImg > height) {
+							   widthImg *= height / heightImg;
+							   heightImg = height;
+							   }
+							   }
+							   if (widthImg < heightImg) {
+							   if (widthImg < width) {
+							   heightImg *= widthImg / width;
+							   widthImg = width;
+							   }
+							   } else {
+							   if (heightImg < height) {
+							   widthImg *= heightImg / height;
+							   heightImg = height;
+							   }
+							   }
 
-	context = canvas.getContext('2d');
-	context.drawImage(imgSource, 0, 0, width, height);
-	imgResult.addEventListener('load', function () {
-		afterResizing(imgResult);
-	});
+							   context = canvas.getContext('2d');
+							   context.drawImage(imgSource, 0, 0, width, height);
+							   imgResult.addEventListener('load', function () {
+							   afterResizing(imgResult);
+							   });
 
-	imgResult.src = canvas.toDataURL('image/jpg', 0.8);
-}
+							   imgResult.src = canvas.toDataURL('image/jpg', 0.8);
+							   }
 
-function uploadImg(options, afterUploading) {
-	var xhr = new XMLHttpRequest(),
-		formData = new FormData();
-	url = options.url || new Error('`options.url` parameter invalid for `uploadimg` function.');
-	img = options.img || new Error('`options.img` parameter invalid for `uploadimg` function.');
+							   function uploadImg(options, afterUploading) {
+							   var xhr = new XMLHttpRequest(),
+							   formData = new FormData();
+							   url = options.url || new Error('`options.url` parameter invalid for `uploadimg` function.');
+							   img = options.img || new Error('`options.img` parameter invalid for `uploadimg` function.');
 	if (url instanceof Error) {
 		throw url;
 	}
@@ -226,4 +237,4 @@ function uploadImg(options, afterUploading) {
 		});
 	});
 	xhr.send(formData);
-}
+};
