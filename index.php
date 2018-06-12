@@ -6,6 +6,8 @@ require('./controller/signup.php');
 require('./controller/activation.php');
 require('./controller/home.php');
 require('./controller/modifacc.php');
+require('./controller/montage.php');
+require('./controller/upload.php');
 
 try {
 	if (isset($_GET['action'])) {
@@ -36,7 +38,9 @@ try {
 		} elseif ($_GET['action'] == 'modif_acc') {
 			modif_acc();
 		} elseif ($_GET['action'] == 'montage') {
-			//a faire
+			montage();
+		} elseif ($_GET['action'] == 'upload') {
+			uploadImg();
 		} else {
 			throw new Exception("BAD ACTION");
 		}

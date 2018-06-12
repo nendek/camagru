@@ -87,13 +87,15 @@ function streaming(stream) {
 
 	send.addEventListener('click', function(ev) {
 		uploadImg({
-			url: "none",
+			url: "http://localhost:8080/camagru/index.php?action=upload",
 			img: document.getElementById("img")
-		}, function (error, response) {
+		}, function (res) {
 			var data = document.createElement('div');
+			var error = res.error;
+			var response = res.response;
+
 			data.textContent = (error) ? error : response;
 			displayCam.appendChild(data);
-			displayCam.appendChild(imageResult);
 		});
 	});
 }
@@ -144,7 +146,7 @@ function readImg(inputFile, afterConversion) {
 
 		img.addEventListener('load', function () {
 			if (afterConversion) {
-				afterConversion(img, reader);
+				afterConversion(img);
 			}
 		});
 		img.src = reader.result;
@@ -186,7 +188,7 @@ function reduceimg(imgSource, afterResizing) {
 	context = canvas.getContext('2d');
 	context.drawImage(imgSource, 0, 0, width, height);
 	imgResult.addEventListener('load', function () {
-		afterResizing(imgResult, canvas);
+		afterResizing(imgResult);
 	});
 
 	imgResult.src = canvas.toDataURL('image/jpg', 0.8);
@@ -207,24 +209,18 @@ function uploadImg(options, afterUploading) {
 	xhr.open('POST', url, true);
 	xhr.addEventListener('load', function () {
 		if (xhr.status < 200 && xhr.status >= 400) {
-			return Function.namedParameters(afterUploading, {
+			return afterUploading({
 				error: new Error('XHR connection error for `uploadimg` function.'),
 				response: null
 			});
 		}
-		/**
-		 * What do after upload the img.
-		 * @callback uploadimg~callback
-		 * @param {Error}  [error]    - Return `null` if no error occur else return an `Error` object.
-		 * @param {string} [response] - Return the content of XHR response if no error occur, else return `null`.
-		 */
-		Function.namedParameters(afterUploading, {
+		afterUploading({ 
 			error: null,
 			response: xhr.responseText
 		});
 	});
 	xhr.addEventListener('error', function (test) {
-		Function.namedParameters(afterUploading, {
+		afterUploading({
 			error: new Error('XHR connection error for `uploadimg` function.'),
 			response: null
 		});
