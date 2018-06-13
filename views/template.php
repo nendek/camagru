@@ -17,7 +17,7 @@ session_start();
 			?>
 			<a href="../index.php?action=logout">logout !</a>
 			<a href="../index.php?action=modif_acc">modif account !</a>
-			<a href="./view_montage.php">montage !</a>
+			<a href="../index.php?action=montage">montage !</a>
 			<p>Welcome <?=$_SESSION['firstname']?> to camagru !</p>
 			<?php
 			} else { 

@@ -8,4 +8,5 @@ function montage() {
 		throw new Exception("ACCESS DENIED");
 	}
 }
+
 ?>

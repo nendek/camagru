@@ -55,7 +55,7 @@ function add_new_user($lastname, $firstname, $email, $username, $passwd, $verifi
 		Pour activer votre compte, veuillez cliquer sur le lien ci dessous
 		ou copier/coller dans votre navigateur internet.
 
-		http://camagru.com/index.php?action=validation&user='.urlencode($username).'&token='.urlencode($token).'
+		http://localhost:8080/camagru/index.php?action=validation&user='.urlencode($username).'&token='.urlencode($token).'
 
 
 	---------------
