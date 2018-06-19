@@ -32,16 +32,20 @@ function resizeImg($image) {
 	}
 }
 
-function fusionImg($image, $filter) {
+function fusionImg($image, $imgFont) {
 	$destination = $image;
 	$widthDestination = imagesx($destination);
 	$heightDestination = imagesy($destination);
-	$widthFilter = imagesx($filter);
-	$heightFilter = imagesy($filter);
+	$widthFont = imagesx($imgFont);
+	$heightFont = imagesy($imgFont);
 	$x = 0;
 	$y = 0;
 
-	imagecopymerge($destination, $filter, $x, $y, 0, 0, $widthDestination, $heightDestination, 60);
+	if ($widthFont == 510 && $heightFont == 510) {
+		imagecopymerge($destination, $imgFont, $x, $y, 0, 0, $widthDestination, $heightDestination, 60);
+	} else {
+		imagecopy($destination, $imgFont, $x, $y, 0, 0, $widthDestination, $heightDestination);
+	}
 	return ($destination);
 }
 
