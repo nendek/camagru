@@ -24,7 +24,7 @@ function uploadImg() {
 			mkdir($montageDir);
 		}
 		file_put_contents($montageDir . $uiid . '.png', $img);
-		
+
 		$imgFont = imagecreatefrompng("./font/".$filter.".png");
 		$img = imagecreatefrompng("./montage/".$uiid.".png");
 
@@ -34,9 +34,15 @@ function uploadImg() {
 		imagepng($img, $montageDir."image.png");
 
 		//fusion
-		$img = fusionImg($img, $imgFont);
-		
-		imagepng($img, $montageDir.$uiid.".png");
+		$img = fusionImg($img, $imgFont , 155, 155);
+
+		$success = imagepng($img, $montageDir.$uiid.".png");
+		if ($success) {
+//			add_montage($id, $uiid . '.png');
+			echo ($uiid . '.png');
+		}
+		imageDestroy($img);
+		imageDestroy($imgFont);
 
 		echo "ok pd";
 	} else {

@@ -2,8 +2,6 @@
 
 require_once('./models/model_connect.php');
 
-header("Content-Type: image/jpg");
-
 function add_montage($userId, $imgPath) {
 	include_once '../setup/database.php';
 
@@ -32,19 +30,17 @@ function resizeImg($image) {
 	}
 }
 
-function fusionImg($image, $imgFont) {
+function fusionImg($image, $imgFont, $x, $y) {
 	$destination = $image;
 	$widthDestination = imagesx($destination);
 	$heightDestination = imagesy($destination);
 	$widthFont = imagesx($imgFont);
 	$heightFont = imagesy($imgFont);
-	$x = 0;
-	$y = 0;
 
 	if ($widthFont == 510 && $heightFont == 510) {
 		imagecopymerge($destination, $imgFont, $x, $y, 0, 0, $widthDestination, $heightDestination, 60);
 	} else {
-		imagecopy($destination, $imgFont, $x, $y, 0, 0, $widthDestination, $heightDestination);
+		imagecopy($destination, $imgFont, $x, $y, 0, 0, $widthFont, $heightFont);
 	}
 	return ($destination);
 }
