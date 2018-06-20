@@ -29,31 +29,31 @@ try {
 		);";
 	$dbh->prepare($req)->execute();
 	echo "Table users create\n";
-	$req = "CREATE TABLE IF NOT EXISTS ".$DB_NAME.".`galery` (
+	$req = "CREATE TABLE IF NOT EXISTS ".$DB_NAME.".`gallery` (
 		id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		userId INT NOT NULL,
 		img VARCHAR (100),
 		FOREIGN KEY (userId) REFERENCES users(id)
 		);";
 	$dbh->prepare($req)->execute();
-	echo "Table galery create\n";
+	echo "Table gallery create\n";
 	$req = "CREATE TABLE IF NOT EXISTS ".$DB_NAME.".`comment` (
 		id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		userId INT NOT NULL,
-		galeryId INT NOT NULL,
+		galleryId INT NOT NULL,
 		comment TEXT,
 		FOREIGN KEY (userId) REFERENCES users(id),
-		FOREIGN KEY (galeryId) REFERENCES galery(id)
+		FOREIGN KEY (galleryId) REFERENCES gallery(id)
 		);";
 	$dbh->prepare($req)->execute();
 	echo "Table comment create\n";
 	$req = "CREATE TABLE IF NOT EXISTS ".$DB_NAME.".`like` (
 		id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		userId INT NOT NULL,
-		galeryId INT NOT NULL,
+		galleryId INT NOT NULL,
 		yes TINYINT,
 		FOREIGN KEY (userId) REFERENCES users(id),
-		FOREIGN KEY (galeryId) REFERENCES galery(id)
+		FOREIGN KEY (galleryId) REFERENCES gallery(id)
 		);";
 	$dbh->prepare($req)->execute();
 	echo "Table like create\n";

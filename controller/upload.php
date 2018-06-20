@@ -38,7 +38,7 @@ function uploadImg() {
 
 		$success = imagepng($img, $montageDir.$uiid.".png");
 		if ($success) {
-//			add_montage($id, $uiid . '.png');
+			add_montage($id, $uiid . '.png');
 			echo ($uiid . '.png');
 		}
 		imageDestroy($img);

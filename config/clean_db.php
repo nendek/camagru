@@ -6,12 +6,12 @@ try {
 	$dbh = new PDO($DB_DNS, $DB_USER, $DB_PASSWD);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	echo "Connect DB camagru Ok\nClean TABLES...\n";
-	$req = "DELETE FROM `galery`";
+	$req = "DELETE FROM `gallery`";
 	$dbh->prepare($req)->execute();
-	echo "Table galery clean\n";
+	echo "Table gallery clean\n";
 	$req = "DELETE FROM `comment`";
 	$dbh->prepare($req)->execute();
-	echo "Table galery comment\n";
+	echo "Table gallery comment\n";
 	$req = "DELETE FROM `like`";
 	$dbh->prepare($req)->execute();
 	echo "Table like clean\n";
