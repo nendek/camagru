@@ -4,7 +4,7 @@ require_once('./models/model_connect.php');
 
 function add_montage($userId, $imgPath) {
 	$dbh = get_db();
-	$req = $dbh->prepare("INSERT INTO gallery (userid, img) VALUES (:userid, :img)");
+	$req = $dbh->prepare("INSERT INTO gallery (userId, img) VALUES (:userId, :img)");
 	$req->bindValue(':userId', $userId, PDO::PARAM_STR);
 	$req->bindValue(':img', $imgPath, PDO::PARAM_STR);
 	$req->execute();

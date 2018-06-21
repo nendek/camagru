@@ -30,8 +30,6 @@ function uploadImg() {
 
 		//resize filtre
 		$imgFont = resizeImg($imgFont);
-		imagepng($imgFont, $montageDir."filter.png");
-		imagepng($img, $montageDir."image.png");
 
 		//fusion
 		$img = fusionImg($img, $imgFont , 155, 155);
@@ -43,8 +41,6 @@ function uploadImg() {
 		}
 		imageDestroy($img);
 		imageDestroy($imgFont);
-
-		echo "ok pd";
 	} else {
 		echo "pas ok pd";
 	}

@@ -116,7 +116,7 @@ function videoErr(err) {
 				})
 			})
 			);
-	
+
 	send.addEventListener('click', function(ev) {
 		uploadImg({
 			url: "http://localhost:8080/camagru/index.php?action=upload",
@@ -139,77 +139,77 @@ function selectImg(afterSelect) {
 
 	inputFile.type = 'file';
 	inputFile.className = 'button';
-	inputFile.accept = 'image/*';
-							   inputFile.addEventListener('change', function () {
-							   if (afterSelect) {
-							   afterSelect(inputFile);
-							   }
-							   }, false );
+	//	inputFile.accept = 'image/*';
+	inputFile.addEventListener('change', function () {
+		if (afterSelect) {
+			afterSelect(inputFile);
+		}
+	}, false );
 
-							   return inputFile;
-							   };
+	return inputFile;
+};
 
-							   function readImg(inputFile, afterConversion) {
-							   var reader = new FileReader();
+function readImg(inputFile, afterConversion) {
+	var reader = new FileReader();
 
-							   reader.addEventListener('load', function() {
-							   var img = document.createElement('img');
+	reader.addEventListener('load', function() {
+		var img = document.createElement('img');
 
-							   img.addEventListener('load', function () {
-							   if (afterConversion) {
-							   afterConversion(img);
-							   }
-							   });
-							   img.src = reader.result;
-							   });
+		img.addEventListener('load', function () {
+			if (afterConversion) {
+				afterConversion(img);
+			}
+		});
+		img.src = reader.result;
+	});
 
-							   reader.readAsDataURL(inputFile.files[0]);
-							   };
+	reader.readAsDataURL(inputFile.files[0]);
+};
 
-							   function reduceimg(imgSource, afterResizing) {
-							   var	imgResult = document.createElement('img'),
-							   context,
-							   widthImg = imgSource.width,
-							   heightImg = imgSource.height;
+function reduceimg(imgSource, afterResizing) {
+	var	imgResult = document.createElement('img'),
+	context,
+	widthImg = imgSource.width,
+	heightImg = imgSource.height;
 
-							   imgResult.id = 'img';
-							   if (widthImg > heightImg) {
-							   if (widthImg > width) {
-							   heightImg *= width / widthImg;
-							   widthImg = width;
-							   }
-							   } else {
-							   if (heightImg > height) {
-							   widthImg *= height / heightImg;
-							   heightImg = height;
-							   }
-							   }
-							   if (widthImg < heightImg) {
-							   if (widthImg < width) {
-							   heightImg *= widthImg / width;
-							   widthImg = width;
-							   }
-							   } else {
-							   if (heightImg < height) {
-							   widthImg *= heightImg / height;
-							   heightImg = height;
-							   }
-							   }
+	imgResult.id = 'img';
+	if (widthImg > heightImg) {
+		if (widthImg > width) {
+			heightImg *= width / widthImg;
+			widthImg = width;
+		}
+	} else {
+		if (heightImg > height) {
+			widthImg *= height / heightImg;
+			heightImg = height;
+		}
+	}
+	if (widthImg < heightImg) {
+		if (widthImg < width) {
+			heightImg *= widthImg / width;
+			widthImg = width;
+		}
+	} else {
+		if (heightImg < height) {
+			widthImg *= heightImg / height;
+			heightImg = height;
+		}
+	}
 
-							   context = canvas.getContext('2d');
-							   context.drawImage(imgSource, 0, 0, width, height);
-							   imgResult.addEventListener('load', function () {
-							   afterResizing(imgResult);
-							   });
+	context = canvas.getContext('2d');
+	context.drawImage(imgSource, 0, 0, width, height);
+	imgResult.addEventListener('load', function () {
+		afterResizing(imgResult);
+	});
 
-							   imgResult.src = canvas.toDataURL('image/jpg', 0.8);
-							   }
+	imgResult.src = canvas.toDataURL('image/jpg', 0.8);
+}
 
-							   function uploadImg(options, afterUploading) {
-							   var xhr = new XMLHttpRequest(),
-							   formData = new FormData();
-							   url = options.url || new Error('`options.url` parameter invalid for `uploadimg` function.');
-							   img = options.img || new Error('`options.img` parameter invalid for `uploadimg` function.');
+function uploadImg(options, afterUploading) {
+	var xhr = new XMLHttpRequest(),
+	formData = new FormData();
+	url = options.url || new Error('`options.url` parameter invalid for `uploadimg` function.');
+	img = options.img || new Error('`options.img` parameter invalid for `uploadimg` function.');
 	if (url instanceof Error) {
 		throw url;
 	}
@@ -238,3 +238,7 @@ function selectImg(afterSelect) {
 	});
 	xhr.send(formData);
 };
+
+function putFont() {
+
+}
