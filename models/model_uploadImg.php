@@ -5,10 +5,24 @@ require_once('./models/model_connect.php');
 function add_montage($userId, $imgPath) {
 	$dbh = get_db();
 	$req = $dbh->prepare("INSERT INTO gallery (userId, img) VALUES (:userId, :img)");
-	$req->bindValue(':userId', $userId, PDO::PARAM_STR);
+	$req->bindValue(':userId', $userId, PDO::PARAM_INT);
 	$req->bindValue(':img', $imgPath, PDO::PARAM_STR);
 	$req->execute();
 	return (0);
+}
+
+function get_montageID($userId) {
+	$dbh = get_db();
+	$req = $dbh->prepare("SELECT `img` FROM `gallery` WHERE `userId`=:userId");
+	$req->bindValue(':userId', $userId, PDO::PARAM_INT);
+	$req->execute();
+
+	$i = 0;
+	$tab = null;
+	while ($row = $req->fetch()) {
+		$tab[$i] = $row;
+	
+	return ($row);
 }
 
 function resizeImg($image) {

@@ -41,6 +41,8 @@ try {
 			montage();
 		} elseif ($_GET['action'] == 'upload') {
 			uploadImg();
+		} elseif ($_GET['action'] == 'displayMontage') {
+			displayMontage();
 		} else {
 			throw new Exception("BAD ACTION");
 		}

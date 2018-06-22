@@ -7,6 +7,8 @@ var textButton = document.createTextNode("TAKE PICTURE");
 var canvas = document.createElement('canvas');
 var send = document.createElement('button');
 var textSend = document.createTextNode("SAVE MONTAGE");
+var montage = document.createElement('button');
+var textMontage = document.createTextNode("DISPLAY MONTAGE");
 
 var width = 510;
 var height = 510;
@@ -20,6 +22,9 @@ canvas.height = height;
 
 send.className = 'button';
 send.appendChild(textSend);
+
+montage.className = 'button';
+montage.appendChild(textMontage);
 
 
 if (navigator.mediaDevices === undefined) {
@@ -42,6 +47,18 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
 }
 
 navigator.mediaDevices.getUserMedia({ video: true }).then(streaming).catch(videoErr);
+
+montage.addEventListener('click', function(ev) {
+	displayMontage({
+		url: "http://localhost:8080/camagru/index.php?action=displayMontage"
+	}, function (res) {
+		var data = document.createElement('div');
+		var error = res.error;
+		var response = res.reponse;
+
+		data.textContent = (error) ? error : response;
+	});
+};
 
 function streaming(stream) {
 
@@ -239,6 +256,30 @@ function uploadImg(options, afterUploading) {
 	xhr.send(formData);
 };
 
-function putFont() {
-
+function displayMontage(options, afterPutFont) {
+	var xhr = new XMLHttpRequest();
+	url = options.url || new Error('`options.url` parameter invalid for `uploadimg` function.');
+	if (url instanceof Error) {
+		throw url;
+	}
+	xhr.open('GET', url, true);
+	xhr.addEventListener('load', function () {
+		if (xhr.status < 200 && xhr.status >= 400) {
+			return afterUploading({
+				error: new Error('XHR connection error for `uploadimg` function.'),
+				response: null
+			});
+		}
+		afterPutFont({ 
+			error: null,
+			response: xhr.responseText
+		});
+	});
+	xhr.addEventListener('error', function (test) {
+		afterPutFont({
+			error: new Error('XHR connection error for `uploadimg` function.'),
+			response: null
+		});
+	});
+	xhr.send(null);
 }
