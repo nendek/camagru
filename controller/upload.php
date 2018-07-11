@@ -1,6 +1,6 @@
 <?php
 
-require('./models/model_uploadImg.php');
+require_once('./models/model_uploadImg.php');
 
 function uploadImg() {
 

@@ -23,6 +23,7 @@ function get_montageID($userId) {
 		$tab[$i] = $row;
 	
 	return ($row);
+	}
 }
 
 function resizeImg($image) {
