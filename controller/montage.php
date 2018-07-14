@@ -14,8 +14,7 @@ function montage() {
 function displayMontage() {
 	if (isset($_SESSION['id'])) {
 		$userId = $_SESSION['id'];
-		$tab = get_montageID($userId);
-		
+		$tab = get_montageID($userId);		
 		return ;
 	} else {
 		throw new Exception("ACCESS DENIED");

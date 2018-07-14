@@ -58,7 +58,7 @@ montage.addEventListener('click', function(ev) {
 
 		data.textContent = (error) ? error : response;
 	});
-};
+});
 
 function streaming(stream) {
 
